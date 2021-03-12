@@ -58,6 +58,10 @@ import msal from 'vue-msal'
       callAfterInit: true,
       endpoints: {
         profile: '/me',
+      },
+      onResponse(ctx, response) {
+        localStorage.setItem('msalgE',response.profile.mail)
+        localStorage.setItem('msalgL',response.profile.officeLocation)
       }
     },
   });

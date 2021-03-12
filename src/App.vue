@@ -1,42 +1,16 @@
 <template>
   <div id="app">
-    <!--
-    <div 
-      class="main"
-      :style='{
-        backgroundImage: "url("+back_img+")",
-        backgroundPosition: "center center",
-        backgroundAttachment: "fixed",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        minHeight: mh
-      }'
-    ></div>
-  -->
-      <router-view/>
-    
+    <router-view/>
   </div>
 </template>
 <script>
   export default {
     name: "App",
-    /*
-    data(){
-      return{
-        mh: "100vh"
-      }
-    },
     created() {
       if(this.$msal.isAuthenticated()){
-        this.back_img = "https://wallpaperaccess.com/full/492167.png"
-        this.mh = ""
-      }
-      else{
-        this.back_img = "https://miespaciolaureate.com/pruebas_media/comunicacion-corporativa1.jpg"
-        this.mh = "100vh"
+        //localStorage.setItem('msalE', this.$msal.data.graph.profile.email)
       }
     }
-    */
   }
 </script>
 <style lang="css">  

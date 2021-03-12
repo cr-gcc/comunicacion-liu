@@ -76,7 +76,16 @@ export default new Vuex.Store({
   },
   actions: {
     getUCAsinc(context, payload){
-
+      /*
+      console.log(localStorage.getItem('msalgE'))
+      console.log(localStorage.getItem('msalgL'))
+      */
+      //console.log(this.vm.$msal.data.graph.profile)
+      //console.log(Vue.prototype.$msal.data.graph)
+      //console.log(window.msal)
+      //let idToken = localStorage.getItem('msal.idtoken')
+      //let profile = localStorage.getItem('msal.msgraph-'+idToken)
+      //console.log(profile)
     },
     getComByDateAsic(context, payload){
 

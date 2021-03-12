@@ -190,11 +190,14 @@
           fecha: "",
         //VANISH
           vsSearch: false,
+        //act
+          updateMG: ""
       }
     },
     //
     methods:{
       ...mapActions([
+        'getUCAsinc',
         'getComByDateAsic'
       ]),
       //SEARCH COM
@@ -250,5 +253,3 @@
     }
   }
 </script>
-<style lang="css">
-</style>
