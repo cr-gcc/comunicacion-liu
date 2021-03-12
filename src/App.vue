@@ -10,5 +10,6 @@
     name: "App"
   }
 </script>
-<style>
+<style lang="css">  
+  @import './assets/styles/core.css';
 </style>
