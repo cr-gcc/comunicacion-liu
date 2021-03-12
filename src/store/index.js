@@ -12,7 +12,7 @@ export default new Vuex.Store({
     slides: "",
     landingIns: "",
     logoIns: "",
-    navIns: '#000000',
+    navIns: '#1f1f1f',
     marcaInsClass: "",
     marca: "",
     instagram: "",
@@ -34,15 +34,15 @@ export default new Vuex.Store({
       if(ins==1){
         state.marcaInsClass="uvm"
         state.navIns = "#b32218"
-        state.logoIns = "https://miespaciolaureate.com/comunicacion/public/img/comunicados/uvm.png"
-        state.landingIns = "https://miespaciolaureate.com/comunicacion/public/img/landings/uvm.jpg"
+        state.logoIns = "uvm.png"
+        state.landingIns = "uvm.jpg"
         state.marca = "Universidad Del Valle De México"
       }
       else if(ins==2){
         state.marcaInsClass="unitec"
         state.navIns = "#0f406b"
-        state.logoIns = "https://miespaciolaureate.com/comunicacion/public/img/comunicados/unitec.png"
-        state.landingIns = "https://miespaciolaureate.com/comunicacion/public/img/landings/unitec.jpg"
+        state.logoIns = "unitec.png"
+        state.landingIns = "unitec.jpg"
         state.marca = "Universidad Tecnológica De México"
       }
       else{

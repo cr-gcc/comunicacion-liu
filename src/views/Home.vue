@@ -9,20 +9,21 @@
         >
       </div>
       <el-menu 
-      class="el-menu-demo" 
-      mode="horizontal"
-      text-color="#fff"
-      active-text-color="#fff"
-      :background-color="navIns"
-      default-active="2"
+        id="emd"
+        class="el-menu-demo" 
+        mode="horizontal"
+        text-color="#fff"
+        active-text-color="#fff"
+        :background-color="navIns"
+        default-active="2"
       >
       <el-menu-item index="1">
-        <figure>
-          <img class="nav_mi" :src="logoIns" alt=""> 
+        <figure style="margin: 0">
+          <img v-if="logoIns" class="nav_mi" :src="require(`@/assets/images/comunicados/${logoIns}`)"> 
         </figure> 
         </el-menu-item>
         <el-menu-item index="2">
-          <div class="nav_button_ss">
+          <div class="nav_button_ss" @click="logout()">
             <span>Salir</span>
             <span class="pos_icon">
               <font-awesome-icon icon="sign-out-alt"/>
@@ -67,7 +68,10 @@
         </div>
       </section>
       <section class="parallax-container">
-        <div class="parallax" :style="'background-image: url('+landingIns+');'">
+        <div 
+          class="parallax"
+          :style="bgLandingImg"
+        >
           <h1 class="paralax_title">
             <span v-if="todate" class="paralax_title_date">Comunicados 
             {{ todate | dateFormat('MMMM YYYY')}}</span>
@@ -196,7 +200,11 @@
       //SEARCH COM
       searchCom(){
 
-      }
+      },
+      //
+      logout(){
+        this.$msal.signOut();
+      },
     },
     //
     computed: {
@@ -220,9 +228,26 @@
         'vsInfo',
         'vsInfoMsg',
         'fullscreenLoading'
-      ])
+      ]),
+      bgli(){
+        if(this.landingIns){
+          return require("@/assets/images/landings/"+this.landingIns)
+        }
+      },
+      bgLandingImg(){
+        if(this.landingIns){
+          return {
+            backgroundImage: `url(${this.bgli})`
+          }
+        }
+      }
     },
-
+    //
+    created() {
+      if(!this.$msal.isAuthenticated()){
+        this.$router.replace('login')
+      }
+    }
   }
 </script>
 <style lang="css">

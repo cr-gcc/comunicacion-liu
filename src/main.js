@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import msal from 'vue-msal'
 //FRONT
   import ElementUI from 'element-ui';
   import 'element-ui/lib/theme-chalk/index.css';
@@ -38,6 +39,27 @@ import store from './store'
       'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
       'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
     ]
+  });
+  Vue.use(msal, {
+    auth: {
+      authority: 'https://login.microsoftonline.com/346a1d1d-e75b-4753-902b-74ed60ae77a1',
+      clientId: '0b368afc-a7f9-45fb-9b99-4d729836e071',
+      redirectUri: 'http://localhost:8080/'
+      /*
+      clientId: 'aa611fe1-33ad-4929-8717-be5a029daef2',
+      redirectUri: 'https://miespaciolaureate.com/vue-azure/'
+      */
+    },
+    cache: {
+      cacheLocation: 'localStorage',
+      storeAuthStateInCookie: false
+    },
+    graph: {
+      callAfterInit: true,
+      endpoints: {
+        profile: '/me',
+      }
+    },
   });
 //COMPONENTS 
   Vue.component('font-awesome-icon', FontAwesomeIcon);
