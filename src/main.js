@@ -42,13 +42,9 @@ import msal from 'vue-msal'
   });
   Vue.use(msal, {
     auth: {
-      authority: 'https://login.microsoftonline.com/346a1d1d-e75b-4753-902b-74ed60ae77a1',
-      clientId: '0b368afc-a7f9-45fb-9b99-4d729836e071',
-      redirectUri: 'http://localhost:8080/'
-      /*
-      clientId: 'aa611fe1-33ad-4929-8717-be5a029daef2',
-      redirectUri: 'https://miespaciolaureate.com/vue-azure/'
-      */
+      authority: process.env.VUE_APP_AUTHORITY,
+      clientId: process.env.VUE_APP_CLIENT_ID,
+      redirectUri: process.env.VUE_APP_REDIRECT_URI
     },
     cache: {
       cacheLocation: 'localStorage',
@@ -60,10 +56,13 @@ import msal from 'vue-msal'
         profile: '/me',
       },
       onResponse(ctx, response) {
-        localStorage.setItem('msalgE',response.profile.mail)
-        localStorage.setItem('msalgL',response.profile.officeLocation)
+        let email = response.profile.mail
+        let location = response.profile.officeLocation
+        let domain = email.split('@')[1]
+        localStorage.setItem('msalgD',domain)
+        localStorage.setItem('msalgL',location)
       }
-    },
+    }
   });
 //COMPONENTS 
   Vue.component('font-awesome-icon', FontAwesomeIcon);

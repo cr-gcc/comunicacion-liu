@@ -176,6 +176,23 @@
           </el-row>
         </div>
       </footer>
+      <!---->
+      <el-dialog
+        id="m_welcome"
+        title="Bienvenido"
+        :visible.sync="dialog_welcome"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        :show-close="false"
+        width="40%"
+        center
+      >
+        <p>Descripción del problema</p>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="info" @click="welcome()" size="mini" plain>Aceptar</el-button>
+        </span>
+      </el-dialog>
+
     </div>
   </div>
 </template>
@@ -191,7 +208,7 @@
         //VANISH
           vsSearch: false,
         //act
-          updateMG: ""
+          dialog_welcome: false
       }
     },
     //
@@ -208,6 +225,10 @@
       logout(){
         this.$msal.signOut();
       },
+      welcome(){
+        this.getUCAsinc(true)
+        this.dialog_welcome = false;
+      }
     },
     //
     computed: {
@@ -246,10 +267,20 @@
       }
     },
     //
-    created() {
+    mounted(){
+      this.dialog_welcome = true;
+    },
+    //
+    created(){
       if(!this.$msal.isAuthenticated()){
         this.$router.replace('login')
       }
+      /*
+      else{
+        this.getUCAsinc(true)
+
+      }
+      */
     }
   }
 </script>

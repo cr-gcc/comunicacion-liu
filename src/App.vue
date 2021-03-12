@@ -6,11 +6,6 @@
 <script>
   export default {
     name: "App",
-    created() {
-      if(this.$msal.isAuthenticated()){
-        //localStorage.setItem('msalE', this.$msal.data.graph.profile.email)
-      }
-    }
   }
 </script>
 <style lang="css">  

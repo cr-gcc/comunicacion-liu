@@ -1,4 +1,4 @@
-.el-menu.el-menu--horizontal{
+.el-menu.el-menu--horizontal {
   border-bottom: none;
 }
 .el-menu--horizontal>.el-menu-item:nth-of-type(2) {
@@ -8,21 +8,35 @@
   float: right;
 }
 /**/
-#login-card{
-  max-width: 430px;
+#login-card, #nf-card{
+  max-width: 520px;
   position: absolute;
   top: 15%;
   right: 5%;
   text-align: center;
 }
-#login-card div{
+#login-card div, #nf-card div{
   background-color:rgba(0,0,0,0.3);
+  border: none;
   color: #fff;
 }
 .title-card{
   margin: 0 auto;
   text-align: center;
   font-weight: 400;
+}
+.title-card-error{
+  margin: 0 auto;
+  text-align: justify;
+  font-weight: 400;
+}
+.title-card-return{
+  margin: 0 auto;
+  font-weight: 400;
+}
+.title-card-return a{
+  color: #fff;
+  text-decoration: none;
 }
 .text-card{
   text-align: justify;
@@ -109,6 +123,7 @@ body{
   background-color: rgba(25,25,25,.4);
   padding: 0px 8px;
   border-radius: 10px;
+  font-size: 30px;
 }
 /*MAIN*/
 .el-main{
@@ -155,7 +170,6 @@ body{
   padding-top: 1.5em;
   padding-bottom: 1em;
 }
-
 .footer_space{
   padding: 0 18px;
 }
@@ -194,3 +208,10 @@ body{
   font-weight: bold;
   color: grey;
 }
+/**/
+.textLink{
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+}
+
