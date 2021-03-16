@@ -10,6 +10,8 @@ export default new Vuex.Store({
     location: "",
     todate: "",
     slides: "",
+    flag_slides: false,
+    msg:"",
     landingIns: "",
     logoIns: "",
     navIns: '#fff',
@@ -53,7 +55,16 @@ export default new Vuex.Store({
         state.marca = ""
       }
       //
-      //state.slides = dataUC.com
+      if(dataUC.estatus==1){
+        state.flag_slides = false
+        state.slides = dataUC.msg
+
+      }
+      else if(dataUC.estatus==2){
+        state.flag_slides = true
+        state.msg = dataUC.msg
+        state.slides = []
+      }
       state.todate = new Date()
     },
     //UPDATE COMMUNIQUE
@@ -79,6 +90,8 @@ export default new Vuex.Store({
   },
   actions: {
     getUCAsinc(context, payload){
+      context.commit('loadCom', true)
+      let url = "http://localhost/api-comunicacion/comunicados"
       let domain = localStorage.getItem('msalgD')
       let location = localStorage.getItem('msalgL')
       let location_type = 0
@@ -125,11 +138,31 @@ export default new Vuex.Store({
           }
         }
       }
-      //llamado api
-      setTimeout(context.commit('checkUC', {ins: institution, loc:location_type}), 2000)
+      //API
+      form = {
+        locacion: location_type,
+        institucion: institution
+      }
+      //
+      axios
+      .post(url, form)
+      .then((res) => {
+        context.commit('loadCom', false)
+        if(res.data.estatus==1){
+          context.commit('checkUC', res.data);
+        }
+        else if(res.data.estatus==2){
+          context.commit('checkUC', res.data);
+        }
+        else if(res.data.estatus==0){
 
-      //console.log(location_type)
-      //console.log(institution)
+        }
+
+      })
+      .catch(error => {
+        context.commit('loadCom', false)
+        console.log(error)
+      })
     },
     getComByDateAsic(context, payload){
 

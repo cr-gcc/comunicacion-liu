@@ -79,6 +79,9 @@
         </div>
       </section>
       <el-main>
+        <div class="msgSlides" v-if="flag_slides">
+          <h1>{{msg}}</h1>
+        </div>
         <masonry
           :cols="{default: 3, 800: 2, 512: 1}"
           :gutter="{default: '10px'}"
@@ -187,7 +190,7 @@
         width="40%"
         center
       >
-        <p>Descripción del problema</p>
+        <p>A continuación podrás consultar los comunicados correspondientes al mes actual. O si lo prefieres puedes puedes buscar comunicados anteriores.</p>
         <span slot="footer" class="dialog-footer">
           <el-button type="info" @click="welcome()" size="mini" plain>Aceptar</el-button>
         </span>
@@ -241,6 +244,8 @@
         'navIns',
         'logoIns',
         'landingIns',
+        'flag_slides',
+        'msg',
         'slides',
         'slides_imgs',
         'marca',
@@ -275,12 +280,6 @@
       if(!this.$msal.isAuthenticated()){
         this.$router.replace('login')
       }
-      /*
-      else{
-        this.getUCAsinc(true)
-
-      }
-      */
     }
   }
 </script>

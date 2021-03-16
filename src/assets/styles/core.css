@@ -158,6 +158,13 @@ body{
   text-decoration: none;
   font-weight: bold;
 }
+.msgSlides{
+  text-align: center;
+}
+.msgSlides h1{
+  color: #fff;
+  font-weight: 400;
+}
 
 /*FOOTER*/
 #footer_unitec{
