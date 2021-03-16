@@ -179,29 +179,43 @@
           </el-row>
         </div>
       </footer>
-      <!---->
-      <el-dialog
-        id="m_welcome"
-        title="Bienvenido"
-        :visible.sync="dialog_welcome"
-        :close-on-click-modal="false"
-        :close-on-press-escape="false"
-        :show-close="false"
-        width="40%"
-        center
-      >
-        <p>A continuación podrás consultar los comunicados correspondientes al mes actual. O si lo prefieres puedes puedes buscar comunicados anteriores.</p>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="info" @click="welcome()" size="mini" plain>Aceptar</el-button>
-        </span>
-      </el-dialog>
-
+      <!--  MODAL WELCOME  -->
+        <el-dialog
+          id="m_welcome"
+          title="Bienvenido"
+          :visible.sync="dialog_welcome"
+          :close-on-click-modal="false"
+          :close-on-press-escape="false"
+          :show-close="false"
+          width="40%"
+          center
+        >
+          <p>A continuación podrás consultar los comunicados correspondientes al mes actual. O si lo prefieres puedes puedes buscar comunicados anteriores.</p>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="info" @click="welcome()" size="mini" plain>Aceptar</el-button>
+          </span>
+        </el-dialog>
+      <!--  MODAL ERROR  -->
+        <el-dialog
+          id="m_error"
+          title="Mensaje"
+          :visible.sync="dialog_msg"
+          :close-on-click-modal="false"
+          :close-on-press-escape="false"
+          :show-close="false"
+          width="30%"
+          center
+        >
+          <p>{{msg}}</p>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="info" @click="closeMsg()" size="mini" plain>Aceptar</el-button>
+          </span>
+        </el-dialog>
     </div>
   </div>
 </template>
-
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapMutation, mapActions } from 'vuex'
   export default {
     name: 'Home',
     data(){
@@ -231,6 +245,10 @@
       welcome(){
         this.getUCAsinc(true)
         this.dialog_welcome = false;
+      },
+      closeMsg(){
+        this.$store.commit('closeMessageError', false)
+        location.reload()
       }
     },
     //
@@ -244,8 +262,6 @@
         'navIns',
         'logoIns',
         'landingIns',
-        'flag_slides',
-        'msg',
         'slides',
         'slides_imgs',
         'marca',
@@ -254,9 +270,14 @@
         'twitter',
         'youtube',
         'linkedin',
+        'fullscreenLoading',
+        'flag_slides',
+        'msg',
+        'dialog_msg',
         'vsInfo',
-        'vsInfoMsg',
-        'fullscreenLoading'
+        'vsInfoMsg'
+
+
       ]),
       bgli(){
         if(this.landingIns){

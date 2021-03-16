@@ -11,7 +11,6 @@ export default new Vuex.Store({
     todate: "",
     slides: "",
     flag_slides: false,
-    msg:"",
     landingIns: "",
     logoIns: "",
     navIns: '#fff',
@@ -22,19 +21,21 @@ export default new Vuex.Store({
     twitter: "",
     youtube: "",
     linkedin: "",
-    vsInfoMsg: "",
+    fullscreenLoading: false,
     vsInfo: false,
-    fullscreenLoading: false
+    vsInfoMsg: '',
+    msg:"",
+    dialog_msg: false
   },
   mutations: {
     //USER COMMUNIQUE
     checkUC(state, dataUC){
       //
       if(dataUC.estatus==0){
-        state.flag_slides = true
-        state.msg = "Ha ocurrido un erro al momento de cargar la información. Por favor recargue la página."
+        state.msg = dataUC.msg
+        state.dialog_msg = true
         state.slides = []
-        state.marcaInsClass=""
+        state.marcaInsClass = ""
         state.navIns = "#fff"
         state.logoIns = ""
         state.landingIns = ""
@@ -89,15 +90,11 @@ export default new Vuex.Store({
     loadCom(state, flag){
       state.fullscreenLoading = flag
     },
-    //INFO MSG
-    openInfoMsg(state, msg){
-      state.vsInfoMsg = msg
-      state.vsInfo = true
+    OpenMessageError(state, flag){
+
     },
-    //INFO MSG
-    closeInfoMsg(state, msg){
-      state.vsInfoMsg = msg
-      state.vsInfo = false
+    closeMessageError(state, flag){
+      state.dialog_msg = flag
     }
   },
   actions: {
@@ -163,8 +160,12 @@ export default new Vuex.Store({
         context.commit('checkUC', res.data);
       })
       .catch(error => {
+        let dataError = {
+          estatus: 0,
+          msg: "Ha ocurrido un error al momento de consultar la información. Por favor intentelo de nuevo."
+        }
         context.commit('loadCom', false)
-        console.log(error)
+        context.commit('checkUC', dataError);
       })
     },
     getComByDateAsic(context, payload){
