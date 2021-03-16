@@ -29,43 +29,55 @@ export default new Vuex.Store({
   mutations: {
     //USER COMMUNIQUE
     checkUC(state, dataUC){
-      let ins = dataUC.ins
-      state.company = ins
-      state.location = dataUC.loc
       //
-      if(ins==1){
-        state.marcaInsClass="uvm"
-        state.navIns = "#b32218"
-        state.logoIns = "uvm.png"
-        state.landingIns = "uvm.jpg"
-        state.marca = "Universidad Del Valle De México"
-      }
-      else if(ins==2){
-        state.marcaInsClass="unitec"
-        state.navIns = "#0f406b"
-        state.logoIns = "unitec.png"
-        state.landingIns = "unitec.jpg"
-        state.marca = "Universidad Tecnológica De México"
-      }
-      else{
+      if(dataUC.estatus==0){
+        state.flag_slides = true
+        state.msg = "Ha ocurrido un erro al momento de cargar la información. Por favor recargue la página."
+        state.slides = []
         state.marcaInsClass=""
         state.navIns = "#fff"
         state.logoIns = ""
         state.landingIns = ""
         state.marca = ""
       }
-      //
-      if(dataUC.estatus==1){
-        state.flag_slides = false
-        state.slides = dataUC.msg
-
+      else{
+        let ins = dataUC.ins
+        state.company = ins
+        state.location = dataUC.loc
+        //
+        if(ins==1){
+          state.marcaInsClass="uvm"
+          state.navIns = "#b32218"
+          state.logoIns = "uvm.png"
+          state.landingIns = "uvm.jpg"
+          state.marca = "Universidad Del Valle De México"
+        }
+        else if(ins==2){
+          state.marcaInsClass="unitec"
+          state.navIns = "#0f406b"
+          state.logoIns = "unitec.png"
+          state.landingIns = "unitec.jpg"
+          state.marca = "Universidad Tecnológica De México"
+        }
+        else{
+          state.marcaInsClass=""
+          state.navIns = "#fff"
+          state.logoIns = ""
+          state.landingIns = ""
+          state.marca = ""
+        }
+        //
+        if(dataUC.estatus==1){
+          state.flag_slides = false
+          state.slides = dataUC.msg
+        }
+        else if(dataUC.estatus==2){
+          state.flag_slides = true
+          state.msg = dataUC.msg
+          state.slides = []
+        }
+        state.todate = new Date()
       }
-      else if(dataUC.estatus==2){
-        state.flag_slides = true
-        state.msg = dataUC.msg
-        state.slides = []
-      }
-      state.todate = new Date()
     },
     //UPDATE COMMUNIQUE
     updateCom(state, dataNC){
@@ -148,16 +160,7 @@ export default new Vuex.Store({
       .post(url, form)
       .then((res) => {
         context.commit('loadCom', false)
-        if(res.data.estatus==1){
-          context.commit('checkUC', res.data);
-        }
-        else if(res.data.estatus==2){
-          context.commit('checkUC', res.data);
-        }
-        else if(res.data.estatus==0){
-
-        }
-
+        context.commit('checkUC', res.data);
       })
       .catch(error => {
         context.commit('loadCom', false)
