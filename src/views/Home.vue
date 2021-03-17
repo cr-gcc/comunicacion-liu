@@ -236,7 +236,13 @@
       ]),
       //SEARCH COM
       searchCom(){
-
+        let form = {
+          locacion: this.location,
+          marca: this.company,
+          fecha: this.fecha
+        }
+        this.getComByDateAsic(form);
+        this.fecha = "";
       },
       //
       logout(){

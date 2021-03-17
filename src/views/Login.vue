@@ -32,7 +32,8 @@
       width="40%"
       center
     >
-      <p>Descripción del problema</p>
+      <p>Para el correcto funcionamiento en el navegador <strong>Safari</strong> vaya a <strong>Preferences -> Privacy</strong> y desabilite la opción <strong>Prevent cross-site tracking</strong> como se muestra en la imagen de abajo.</p>
+      <img style="max-width: 100%" :src="require('@/assets/images/general/safari-help.jpg')"> 
       <span slot="footer" class="dialog-footer">
         <el-button type="info" @click="dialog_safari = false" size="mini" plain>Aceptar</el-button>
       </span>

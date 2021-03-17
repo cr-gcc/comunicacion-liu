@@ -9,7 +9,7 @@ export default new Vuex.Store({
     company: "",
     location: "",
     todate: "",
-    slides: "",
+    slides: [],
     flag_slides: false,
     landingIns: "",
     logoIns: "",
@@ -83,6 +83,8 @@ export default new Vuex.Store({
     //UPDATE COMMUNIQUE
     updateCom(state, dataNC){
       let dateSeacrh = new Date(dataNC.msg[0].updated_at)
+      state.flag_slides = false
+      state.msg = ""
       state.todate = dateSeacrh
       state.slides = dataNC.msg
     },
@@ -90,7 +92,11 @@ export default new Vuex.Store({
     loadCom(state, flag){
       state.fullscreenLoading = flag
     },
-    OpenMessageError(state, flag){
+    openInfoMsg(state, msg){
+      state.vsInfoMsg = msg
+      state.vsInfo = true
+    },
+    openMessageError(state, flag){
 
     },
     closeMessageError(state, flag){
@@ -100,7 +106,7 @@ export default new Vuex.Store({
   actions: {
     getUCAsinc(context, payload){
       context.commit('loadCom', true)
-      let url = "http://localhost/api-comunicacion/comunicados"
+      let url = "https://miespaciolaureate.com/api-comunicacion/comunicados"
       let domain = localStorage.getItem('msalgD')
       let location = localStorage.getItem('msalgL')
       let location_type = 0
@@ -169,7 +175,28 @@ export default new Vuex.Store({
       })
     },
     getComByDateAsic(context, payload){
-
+      context.commit('loadCom', true);
+      let url = "https://miespaciolaureate.com/api-comunicacion/com-fil"
+      let msg = ""
+      //
+      axios
+      .post(url, payload)
+      .then((res) => {
+        context.commit('loadCom', false);
+        if(res.data.estatus==1){
+          context.commit('updateCom', res.data);
+        }
+        else if(res.data.estatus==2){
+          context.commit('openInfoMsg', res.data.msg);
+        }
+        else if(res.data.estatus==0){
+          msg = "Por favor introduzca una fecha para iniciar la busqueda"
+          context.commit('openInfoMsg', msg)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
     }
   }
 })

@@ -145,17 +145,16 @@ body{
   margin-top: 10px;
 }
 .item_txt{
+  text-decoration: none;
   font-size: 18px;
   color: #56575F;
 }
 .item_txt_uvm:hover{ 
   color: #b32218;
-  text-decoration: none;
   font-weight: bold;
 }
 .item_txt_unitec:hover{
   color: #0f406b;
-  text-decoration: none;
   font-weight: bold;
 }
 .msgSlides{
