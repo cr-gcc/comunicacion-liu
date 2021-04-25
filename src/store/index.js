@@ -106,12 +106,12 @@ export default new Vuex.Store({
   actions: {
     getUCAsinc(context, payload){
       context.commit('loadCom', true)
-      let url = "https://miespaciolaureate.com/api-comunicacion/comunicados"
+      let url = "http://localhost/api-comunicacion/comunicados"
       let domain = localStorage.getItem('msalgD')
       let location = localStorage.getItem('msalgL')
       let location_type = 0
       let institution = 0
-      let form = []
+      let form = {}
       //CORPORATIVOS
       //UVM
       if(location==="Oficinas Corporativas" || location==="Corporativo Santa Fe"){
@@ -176,7 +176,7 @@ export default new Vuex.Store({
     },
     getComByDateAsic(context, payload){
       context.commit('loadCom', true);
-      let url = "https://miespaciolaureate.com/api-comunicacion/com-fil"
+      let url = "http://localhost/api-comunicacion/com-fil"
       let msg = ""
       //
       axios

@@ -135,14 +135,21 @@ body{
   padding: 1vw;
   background: #f2f2f3;
   margin-top: 10px;
+  cursor: pointer;
 }
 .item_date{
   text-align: right;
+  /*
   font-weight: bold;
   font-style: italic;
+  */
 }
 .item_info{
   margin-top: 10px;
+}
+.item_tt{
+  margin-top: 10px;
+  text-align: justify;
 }
 .item_txt{
   text-decoration: none;
@@ -179,11 +186,11 @@ body{
 .footer_space{
   padding: 0 18px;
 }
-.footer_marca a{
+.footer_marca #fm{
   text-decoration: none;
   color: grey;
 }
-.footer_marca a:hover{
+.footer_marca #fm:hover{
   color: grey;
   font-weight: bold;
 }
@@ -220,4 +227,45 @@ body{
   font-weight: bold;
   color: #fff;
 }
+/*POST*/
+.post_card{
+  margin-bottom: 20px;
+}
+.post_date{
+  text-align: right;
+}
+.post_title{
+  text-align: center;
+}
+.post_tt_uvm{
+  margin-top: 10px;
+  font-weight: 600;
+  color: #b32218;
+}
+.post_tt_unitec{
+  margin-top: 10px;
+  font-weight: 600;
+  color: #0f406b;
+}
+.post_pi{
+  margin-top: 0;
+}
+.post_text, .post_links{
+  text-align: justify;
+}
+.post_tl{
+  margin: 20px auto 0px auto;
+  font-weight: 600;
+  text-align: center;
+}
+.post_ll_uvm{
+  text-decoration: none;
+  color: #b32218;
+  font-weight: 500;
+}
 
+.post_ll_unitec{
+  text-decoration: none;
+  color: #0f406b;
+  font-weight: 500;
+}
