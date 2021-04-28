@@ -65,13 +65,6 @@
             </div>
           </div>
         </div>
-        <div class="sc-info" v-if="vsInfo">
-          <el-alert
-            :title="vsInfoMsg"
-            type="error"
-            show-icon>
-          </el-alert>
-        </div>
       </section>
       <el-main id="mainContent">
         <router-view/>
@@ -125,7 +118,7 @@
   </div>
 </template>
 <script>
-  import { mapState, mapMutation } from 'vuex'
+  import { mapState, mapMutation, mapActions } from 'vuex'
   export default {
     name: "App",
     data(){
@@ -136,6 +129,17 @@
     },
     //
     methods:{
+      ...mapActions(['getSlidesByDate']),
+      searchCom(){
+        let form = {
+          locacion: localStorage.getItem('msal.location'),
+          institucion: localStorage.getItem('msal.institution'),
+          fecha: this.fecha
+        }
+        this.getSlidesByDate(form)
+        this.vsSearch = false
+        this.fecha = ""
+      },
       //
       logout(){
         this.$msal.signOut();
@@ -154,7 +158,6 @@
         'twitter',
         'youtube',
         'linkedin',
-        'vsInfo',
         'vsFS'
       ])
     },

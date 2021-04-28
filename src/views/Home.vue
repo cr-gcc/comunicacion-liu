@@ -51,7 +51,6 @@
         </div>
       <br>
     </div>
-    
     <!--  MODAL WELCOME -->
       <el-dialog
         id="m_welcome"

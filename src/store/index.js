@@ -9,9 +9,7 @@ export default new Vuex.Store({
     state: {
       fullscreenLoading: false,
       flag_slides: false,
-      vsInfo: false,
       vsFS: true,
-      vsInfoMsg: '',
       slides: [],
       landingIns: "",
       logoIns: "",
@@ -81,9 +79,22 @@ export default new Vuex.Store({
           }
           state.todate = new Date()
         },
+      //UPDATE SLIDES
+        updateCom(state, data){
+          let dateSeacrh = new Date(data.msg[0].date)
+          state.flag_slides = false
+          state.msg = ""
+          state.todate = dateSeacrh
+          state.slides = data.msg
+        },
       //FLAG POST
         flagPost(state, status){
           state.vsFS = status;
+        },
+      //MSG INFO
+        openInfoMsg(state, msg){
+          state.msg = msg
+          state.flag_slides = true
         }
     },
   //ACTIONS
@@ -94,10 +105,6 @@ export default new Vuex.Store({
         let form = {
           locacion: localStorage.getItem('msal.location'),
           institucion: localStorage.getItem('msal.institution')
-          /*
-          location: "",
-          institucion: ""
-          */
         }
         let dataError = null;
         //
@@ -124,6 +131,32 @@ export default new Vuex.Store({
           context.commit('loadCom', false)
           context.commit('slides', dataError)
         })   
+      },
+      getSlidesByDate(context, payload){
+        context.commit('loadCom', true);
+        let url = "http://localhost/api-comunicacion/filtroComunicados"
+        let msg = ""
+        //
+        axios
+        .post(url, payload)
+        .then((res) => {
+          context.commit('loadCom', false)
+          if(res.data.estatus==1){
+            context.commit('updateCom', res.data);
+          }
+          else if(res.data.estatus==2){
+            context.commit('openInfoMsg', res.data.msg);
+          }
+          else if(res.data.estatus==0){
+            msg = "Por favor introduzca una fecha para iniciar la busqueda"
+            context.commit('openInfoMsg', msg)
+          }
+        })
+        .catch(error => {
+          context.commit('loadCom', false)
+          msg = "Ha ocurrido un error al momento de traer la información, por favor intentelo más tardes."
+          context.commit('openInfoMsg', msg)
+        })
       }
     }
 })
