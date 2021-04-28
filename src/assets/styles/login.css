@@ -1,0 +1,45 @@
+#login-card, #nf-card{
+  max-width: 520px;
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  text-align: center;
+}
+#login-card div, #nf-card div{
+  background-color:rgba(0,0,0,0.3);
+  border: none;
+  color: #fff;
+}
+#title-card{
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 400;
+}
+.title-card-error{
+  margin: 0 auto;
+  text-align: justify;
+  font-weight: 400;
+}
+.title-card-return{
+  margin: 0 auto;
+  font-weight: 400;
+}
+.title-card-return a{
+  color: #fff;
+  text-decoration: none;
+}
+.text-card{
+  text-align: justify;
+}
+.options-card{
+  margin: 0 auto
+}
+.text-button{
+  font-size: 14px;
+  padding-left: 5px;
+}
+#textLink{
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+}
