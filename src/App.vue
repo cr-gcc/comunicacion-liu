@@ -1,21 +1,30 @@
 <template>
-  <div id="app">
+  <div id="app" :class="'img'+page">
     <div class="comunicados">
+      <div 
+        v-if="$msal.isAuthenticated()"
+        v-loading.fullscreen.lock="fullscreenLoading"
+        element-loading-text="Cargando"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.6)"
+        >
+      </div>
       <el-menu 
+        v-if="$msal.isAuthenticated()"
         id="emd"
         class="el-menu-demo" 
         mode="horizontal"
         text-color="#fff"
         active-text-color="#fff"
-        background-color="#abcdef"
-        default-active="2"
+        :background-color="navIns"
+        default-active="3"
       >
         <el-menu-item index="1">
           <figure style="margin: 0">
-            <img class="nav_mi" src=""> 
-          </figure> 
+            <img v-if="logoIns" class="nav_mi" :src="require(`@/assets/images/comunicados/${logoIns}`)"> 
+          </figure>  
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="3">
           <div class="nav_button_ss" @click="logout()">
             <span>Salir</span>
             <span class="pos_icon">
@@ -23,8 +32,8 @@
             </span>
           </div>
         </el-menu-item>
-        <el-menu-item index="3" >
-          <div class="nav_button_search">
+        <el-menu-item index="2" v-if="vsFS">
+          <div class="nav_button_search" @click="vsSearch =! vsSearch">
             <span>Buscar</span>
             <span class="pos_icon">
               <font-awesome-icon icon="search"/>
@@ -32,12 +41,43 @@
           </div>
         </el-menu-item>
       </el-menu>
-      <el-main>
+      <section
+        v-if="$msal.isAuthenticated()" 
+        :class="'search_container_'+marcaInsClass" 
+        v-show="vsSearch"
+      >
+        <div class="sc-position">
+          <div class="block">
+            <div class="input_mounth">
+              <el-date-picker
+                v-model="fecha"
+                type="month"
+                format="MM yyyy"
+                size="mini"
+                placeholder="Seleccione un mes">
+              </el-date-picker>
+              <el-button type="info" size="mini" plain @click="searchCom()">
+                <span>Enviar</span>
+                <span class="pos_icon">
+                  <font-awesome-icon icon="paper-plane"/>
+                </span>
+              </el-button>  
+            </div>
+          </div>
+        </div>
+        <div class="sc-info" v-if="vsInfo">
+          <el-alert
+            :title="vsInfoMsg"
+            type="error"
+            show-icon>
+          </el-alert>
+        </div>
+      </section>
+      <el-main id="mainContent">
         <router-view/>
       </el-main>
-      <footer>
-        <p>footer</p>
-        <div v-if="false" :id="'footer_'+marcaInsClass">
+      <footer v-if="$msal.isAuthenticated()">
+        <div :id="'footer_'+marcaInsClass">
           <el-row>
             <el-col :xs="24" :sm="12" class="footer_space">
               <span class="footer_made">Mantente en contacto a través de nuestras redes sociales, o visita el sitio oficial dando clic en <span class="footer_marca"><a id="fm" href="#">{{marca}}</a></span></span>
@@ -81,32 +121,50 @@
           </el-row>
         </div>
       </footer>
-      <!--  MODAL WELCOME  -->
-        <el-dialog
-          v-if="false"
-          id="m_welcome"
-          title="Bienvenido"
-          :visible.sync="dialog_welcome"
-          :close-on-click-modal="false"
-          :close-on-press-escape="false"
-          :show-close="false"
-          width="40%"
-          center
-        >
-          <p>A continuación podrás consultar los comunicados correspondientes al mes actual. O si lo prefieres puedes puedes buscar comunicados anteriores.</p>
-          <span slot="footer" class="dialog-footer">
-            <el-button type="info" @click="welcome()" size="mini" plain>Aceptar</el-button>
-          </span>
-        </el-dialog>
     </div>
   </div>
 </template>
 <script>
+  import { mapState, mapMutation } from 'vuex'
   export default {
     name: "App",
     data(){
       return{
-
+        fecha: "",
+        vsSearch: false,
+      }
+    },
+    //
+    methods:{
+      //
+      logout(){
+        this.$msal.signOut();
+      },
+    },
+    //
+    computed: {
+      ...mapState([
+        'fullscreenLoading',
+        'navIns',
+        'logoIns',
+        'marcaInsClass',
+        'marca',
+        'instagram',
+        'facebook',
+        'twitter',
+        'youtube',
+        'linkedin',
+        'vsInfo',
+        'vsFS'
+      ])
+    },
+    //
+    created(){
+      if(this.$msal.isAuthenticated()){
+        this.page = "App"
+      }
+      else{
+        this.page = "Login"
       }
     }
   }

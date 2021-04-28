@@ -7,6 +7,20 @@ import NotFound from '../views/NotFound.vue'
 //
 Vue.use(VueRouter)
 //
+function accessRequired(to, from, next) {
+  let access = JSON.parse(localStorage.getItem('msal.institution'));
+  switch( to.meta.permission ){
+    case 'user':
+      if(access){
+        next();
+      }
+      else{
+        next({path: '/login'});
+      }
+    break;
+  }
+}
+//
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -30,6 +44,11 @@ const router = new VueRouter({
       path: '/post/:id', 
       name: 'Post',
       component: Post,
+      props: true,
+      beforeEnter: accessRequired,
+      meta: {
+        permission: 'user'
+      }
     },
     { path: '*',
       name: 'NotFound',
