@@ -2,7 +2,7 @@
   <div class="login">
     <el-col id="login-card">
       <el-card>
-        <h2 id="title-card">Comuniacación Laureate</h2>
+        <h1 id="title-card">Comuniacación Laureate</h1>
         <p class="text-card">Por favor inicia sesión con tu cuenta y contraseña institucional. Recuerda que solo podrás entrar con cuentas corporativas (@uvmnet.edu, @mail.unitec.mx, @laureate.mx) con la excepción de los colegios. Para una mejor experiencia utiliza <strong>Firefox</strong> o <strong>Chrome</strong>. Si usas <strong>Safari</strong> da clic <a href="#" id="textLink" @click="dialog_safari = true">aquí</a></p> 
         <p class="text-card">Si tienes algún problema con tu cuenta comunicate con <a href="mailto:mesadeayuda@laureate.mx" id="textLink">Mesa de ayuda</a>. O reinicia tu contraseña a travéz de <a href="https://passwordreset.microsoftonline.com" id="textLink">Office356</a></p>
         <el-button type="info" size="mini" plain @click="login()">

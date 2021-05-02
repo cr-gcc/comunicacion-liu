@@ -9,8 +9,8 @@
                 <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
                 <el-breadcrumb-item>Post</el-breadcrumb-item>
               </el-breadcrumb>
-              <div class="post_view" v-if="post" v-html="post[0].body">
-              </div>
+              <br>
+              <iframe id="postHMTL" v-if="post" :src="post[0].page"></iframe>
             </el-card>
           </div>
         </el-col>
@@ -25,7 +25,7 @@
   props: ['id'],
   data(){
     return{
-      post: null
+      post: null,
     }
   },
   //
