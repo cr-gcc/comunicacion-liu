@@ -10,15 +10,19 @@
 .el-menu--horizontal>.el-menu-item:nth-of-type(3) {
   float: right;
 }
-
-/**/
+.imgApp{
+  background: url(../images/landings/comunicacion.jpg) no-repeat center center fixed;
+  background-size: 100% 100%;
+}
+/*
 .imgLogin{
   background: url(../images/landings/comunicacion.jpg) no-repeat center center fixed;
   background-size: 100% 100%;
 }
 .imgApp{
-
+  background: orange;
 }
+*/
 /**/
 body{
   font-family: 'Quicksand', sans-serif;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="'img'+page">
+  <div id="app" class="imgApp">
     <div class="comunicados">
       <div 
         v-if="$msal.isAuthenticated()"
@@ -10,7 +10,7 @@
         >
       </div>
       <el-menu 
-        v-if="$msal.isAuthenticated()"
+        v-if="$msal.isAuthenticated() && hf"
         id="emd"
         class="el-menu-demo" 
         mode="horizontal"
@@ -69,7 +69,7 @@
       <el-main id="mainContent">
         <router-view/>
       </el-main>
-      <footer v-if="$msal.isAuthenticated()">
+      <footer v-if="$msal.isAuthenticated() && hf">
         <div :id="'footer_'+marcaInsClass">
           <el-row>
             <el-col :xs="24" :sm="12" class="footer_space">
@@ -123,6 +123,7 @@
     name: "App",
     data(){
       return{
+        //page: "",
         fecha: "",
         vsSearch: false,
       }
@@ -148,6 +149,7 @@
     //
     computed: {
       ...mapState([
+        'hf',
         'fullscreenLoading',
         'navIns',
         'logoIns',
@@ -161,15 +163,16 @@
         'vsFS'
       ])
     },
-    //
+    /*
     created(){
       if(this.$msal.isAuthenticated()){
-        this.page = "App"
+        //this.page = "App"
       }
       else{
-        this.page = "Login"
+        //this.page = "Login"
       }
     }
+    */
   }
 </script>
 <style lang="css">  

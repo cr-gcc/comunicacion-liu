@@ -10,7 +10,12 @@
                 <el-breadcrumb-item>Post</el-breadcrumb-item>
               </el-breadcrumb>
               <br>
-              <iframe id="postHMTL" v-if="post" :src="post[0].page"></iframe>
+              <iframe id="postHMTL" v-if="postOk" :src="post[0]['page']"></iframe>
+
+              <div class="msg" 
+                v-if="postOthers" 
+                v-html="post">
+              </div>
             </el-card>
           </div>
         </el-col>
@@ -25,7 +30,9 @@
   props: ['id'],
   data(){
     return{
-      post: null,
+      postOthers: false,
+      postOk: false,
+      post: null
     }
   },
   //
@@ -41,17 +48,29 @@
       this.$store.commit('flagPost', false)
       if(!this.marcaInsClass){
         this.$store.commit('layoutUser', true)
+        this.$store.commit('layoutNotFound', true)
       }
       //
       let id = this.$route.params.id
-      let url = "http://localhost/api-comunicacion/comunicado/"+id
+      let url = process.env.VUE_APP_API_URL+"comunicado/"+id
       axios
       .get(url)
       .then((res) => {
-        this.post = res.data
+        if(res.data.estatus===1){
+          this.postOk = true
+          this.postOthers = false
+          this.post = res.data.msg
+        }
+        else{
+          this.postOk = false
+          this.postOthers = true
+          this.post = res.data.msg
+        }
       })
       .catch((error) => {
-        this.post[0] = {body: "<h2>No se encontro algún post asociado a este identificador. O ha ocurrido un error al momento de realizar la consulta.</h2><h3>Por favor regrese a la página de inicio para buscar otro post o intentalo más tarde.</h3>"}
+        this.postOk = false
+        this.postOthers = true
+        this.post = "<h2>Ha ocurrido un error al monento de hacer la consulta</h2><h3>Por favor regrese a la página de inicio para buscar otro post o intentalo más tarde.</h3>"
       })  
     }
   }

@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
       fullscreenLoading: false,
       flag_slides: false,
+      hf: true,
       vsFS: true,
       slides: [],
       landingIns: "",
@@ -62,6 +63,10 @@ export default new Vuex.Store({
             state.marca = ""
           }
         },
+      //NF STYLE
+        layoutNotFound(state, status){
+          state.hf = status
+        },
       //SLIDES
         slides(state, data){
           if(data.estatus==0){
@@ -101,7 +106,7 @@ export default new Vuex.Store({
     actions: {
       getSlides(context, payload){
         context.commit('loadCom', true)
-        let url = "http://localhost/api-comunicacion/comunicados"
+        let url = process.env.VUE_APP_API_URL+"comunicados"
         let form = {
           locacion: localStorage.getItem('msal.location'),
           institucion: localStorage.getItem('msal.institution')
@@ -134,7 +139,7 @@ export default new Vuex.Store({
       },
       getSlidesByDate(context, payload){
         context.commit('loadCom', true);
-        let url = "http://localhost/api-comunicacion/filtroComunicados"
+        let url = process.env.VUE_APP_API_URL+"filtroComunicados"
         let msg = ""
         //
         axios

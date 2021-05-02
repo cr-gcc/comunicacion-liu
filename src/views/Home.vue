@@ -162,6 +162,7 @@
     //
     computed: {
       ...mapState([
+        'hf',
         'marcaInsClass',
         'landingIns',
         'msg',
@@ -199,7 +200,11 @@
       if(!this.$msal.isAuthenticated()){
         this.$router.replace('login')
       }
+      else{
+        if(!this.hf){
+          this.$store.commit('layoutNotFound', true)
+        }
+      }
     }
-
   }
 </script>
