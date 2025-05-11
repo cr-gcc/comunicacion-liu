@@ -8,8 +8,9 @@
             :style="bgLandingImg"
           >
             <h1 class="paralax_title">
-              <span v-if="todate" class="paralax_title_date">Comunicados 
-              {{ todate | dateFormat('MMMM YYYY')}}</span>
+              <span v-if="date_title || area_title" class="paralax_title_date">
+                <span v-if="fat">{{area_title}}</span> <span v-if="fdt">{{ date_title | dateFormat('MMMM YYYY')}}</span>
+              </span>
             </h1>
           </div>
         </section>
@@ -162,13 +163,17 @@
     //
     computed: {
       ...mapState([
+        'area',
         'hf',
         'marcaInsClass',
         'landingIns',
         'msg',
         'slides',
         'flag_slides',
-        'todate'
+        'fdt',
+        'fat',
+        'date_title',
+        'area_title'
       ]),
       bgli(){
         if(this.landingIns){

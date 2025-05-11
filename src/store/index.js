@@ -9,9 +9,12 @@ export default new Vuex.Store({
     state: {
       fullscreenLoading: false,
       flag_slides: false,
+      flag_tc: 0,
       hf: true,
       vsFS: true,
       slides: [],
+      areas: [],
+      area: null,
       landingIns: "",
       logoIns: "",
       navIns: '#fff',
@@ -22,7 +25,10 @@ export default new Vuex.Store({
       twitter: "",
       youtube: "",
       linkedin: "",
-      todate: "",
+      fdt: true,
+      fat: false,
+      date_title: "",
+      area_title: "",
       msg:""
     },
   //MUTATIONS
@@ -36,14 +42,10 @@ export default new Vuex.Store({
         layoutUser(state, status){
           let location = localStorage.getItem('msal.location')
           let institution = localStorage.getItem('msal.institution')
-          /*
-          state.location = location
-          state.institution = institution
-          */
-          //
           if(institution==1){
             state.marcaInsClass="uvm"
-            state.navIns = "#b32218"
+            //state.navIns = "#b32218"
+            state.navIns = "#d82f36"
             state.logoIns = "uvm.png"
             state.landingIns = "uvm.jpg"
             state.marca = "Universidad Del Valle De México"
@@ -67,6 +69,14 @@ export default new Vuex.Store({
         layoutNotFound(state, status){
           state.hf = status
         },
+      //AREAS
+        areas(state, data){
+          state.areas = data
+        },
+      //SET AREAS
+        setArea(state, val){
+          state.area = val
+        },
       //SLIDES
         slides(state, data){
           if(data.estatus==0){
@@ -82,15 +92,18 @@ export default new Vuex.Store({
             state.slides = []
             state.flag_slides = true
           }
-          state.todate = new Date()
+          state.date_title = new Date()
         },
       //UPDATE SLIDES
         updateCom(state, data){
-          let dateSeacrh = new Date(data.msg[0].date)
           state.flag_slides = false
+          state.flag_tc = data.ftc
           state.msg = ""
-          state.todate = dateSeacrh
           state.slides = data.msg
+          state.area_title = data.area
+          state.date_title = new Date(data.date)
+          state.fat = data.fat
+          state.fdt = data.fdt
         },
       //FLAG POST
         flagPost(state, status){
@@ -100,10 +113,26 @@ export default new Vuex.Store({
         openInfoMsg(state, msg){
           state.msg = msg
           state.flag_slides = true
+        },
+        closeInfoMsg(state, msg){
+          state.msg = msg
+          state.flag_slides = false
         }
     },
   //ACTIONS
     actions: {
+      getAreas(context, payload){
+        let url = process.env.VUE_APP_API_URL+"areas"
+        //
+        axios
+        .get(url)
+        .then((res) => {
+          context.commit('areas', res.data)
+        })
+        .catch(error => {
+          //console.log(error)
+        })
+      },
       getSlides(context, payload){
         context.commit('loadCom', true)
         let url = process.env.VUE_APP_API_URL+"comunicados"
@@ -138,30 +167,40 @@ export default new Vuex.Store({
         })   
       },
       getSlidesByDate(context, payload){
-        context.commit('loadCom', true);
         let url = process.env.VUE_APP_API_URL+"filtroComunicados"
         let msg = ""
-        //
-        axios
-        .post(url, payload)
-        .then((res) => {
-          context.commit('loadCom', false)
-          if(res.data.estatus==1){
-            context.commit('updateCom', res.data);
-          }
-          else if(res.data.estatus==2){
-            context.commit('openInfoMsg', res.data.msg);
-          }
-          else if(res.data.estatus==0){
-            msg = "Por favor introduzca una fecha para iniciar la busqueda"
+        context.commit('closeInfoMsg', msg)
+        //SI AMBOS CAMPOS SON VACIOS
+        if(payload.area==null && payload.fecha==null){
+          msg = "Por favor seleccione al menos un campo de filtrado."
             context.commit('openInfoMsg', msg)
-          }
-        })
-        .catch(error => {
-          context.commit('loadCom', false)
-          msg = "Ha ocurrido un error al momento de traer la información, por favor intentelo más tardes."
-          context.commit('openInfoMsg', msg)
-        })
+        }
+        //SI HAY ALMENOS UN CAMPO
+        else{
+          context.commit('loadCom', true);
+          let url = process.env.VUE_APP_API_URL+"filtroComunicados"
+          //
+          axios
+          .post(url, payload)
+          .then((res) => {
+            context.commit('loadCom', false)
+            if(res.data.estatus==1){
+              context.commit('updateCom', res.data);
+            }
+            else if(res.data.estatus==2){
+              context.commit('openInfoMsg', res.data.msg);
+            }
+            else if(res.data.estatus==0){
+              msg = "Por favor introduzca una fecha para iniciar la busqueda"
+              context.commit('openInfoMsg', msg)
+            }
+          })
+          .catch(error => {
+            context.commit('loadCom', false)
+            msg = "Ha ocurrido un error al momento de traer la información, por favor intentelo más tardes. "+error
+            context.commit('openInfoMsg', msg)
+          })
+        }
       }
     }
 })

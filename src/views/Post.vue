@@ -10,11 +10,22 @@
                 <el-breadcrumb-item>Post</el-breadcrumb-item>
               </el-breadcrumb>
               <br>
-              <iframe id="postHMTL" v-if="postOk" :src="post[0]['page']"></iframe>
-
-              <div class="msg" 
+              <div v-if="postOk">
+                <div v-if="post[0]['doc_type'] == 'html'">
+                  <iframe id="postHMTL" :src="post[0]['page']"></iframe>  
+                </div>
+                <div v-else-if="post[0]['doc_type'] == 'img'">
+                  <img width="100%" :src="post[0]['page']" alt="">
+                </div>
+                <div v-else>
+                  <h2>Ha ocurrido un error al momento de hacer la consulta</h2><h3>Por favor regrese a la página de inicio para buscar otro post o intentalo más tarde.</h3>
+                </div>
+              </div>
+              <div 
+                class="msg" 
                 v-if="postOthers" 
-                v-html="post">
+                v-html="post"
+              >
               </div>
             </el-card>
           </div>
@@ -70,7 +81,7 @@
       .catch((error) => {
         this.postOk = false
         this.postOthers = true
-        this.post = "<h2>Ha ocurrido un error al monento de hacer la consulta</h2><h3>Por favor regrese a la página de inicio para buscar otro post o intentalo más tarde.</h3>"
+        this.post = "<h2>Ha ocurrido un error al momento de hacer la consulta</h2><h3>Por favor regrese a la página de inicio para buscar otro post o intentalo más tarde.</h2>"
       })  
     }
   }

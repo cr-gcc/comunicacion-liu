@@ -54,7 +54,8 @@ body{
 }
 /*SEARCH*/
 .search_container_uvm{
-  background-color: #b32218;
+  /*background-color: #b32218;*/
+  background-color: #d82f36;
 }
 .search_container_unitec{
   background-color: #0f406b;
@@ -77,7 +78,7 @@ body{
   overflow: hidden; 
   position: relative; 
   width: 100%; 
-  background-attachment: fixed; 
+  /*background-attachment: fixed;*/
   background-size: cover; 
   -moz-background-size: cover; 
   -webkit-background-size: cover; 
@@ -161,7 +162,8 @@ body{
   padding-bottom: 1em;
 }
 #footer_uvm{
-  background: #b32218;
+  /*background: #b32218;*/
+  background: #d82f36;
   padding-top: 1.5em;
   padding-bottom: 1em;
 }
@@ -253,4 +255,8 @@ body{
   text-decoration: none;
   color: #0f406b;
   font-weight: 500;
+}
+
+#sform{
+  margin-bottom: 0;
 }

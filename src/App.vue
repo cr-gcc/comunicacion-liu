@@ -47,7 +47,19 @@
         v-show="vsSearch"
       >
         <div class="sc-position">
-          <div class="block">
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item id="sform">
+            <el-select @change="setArea" :value="area" size="mini" placeholder="Área">
+              <el-option
+                v-for="(ar, ind) in areas"
+                :key="'areas-'+ind"
+                :label="ar.area"
+                :value="ar.id_area"
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item id="sform">
             <div class="input_mounth">
               <el-date-picker
                 v-model="fecha"
@@ -55,15 +67,18 @@
                 format="MM yyyy"
                 size="mini"
                 placeholder="Seleccione un mes">
-              </el-date-picker>
-              <el-button type="info" size="mini" plain @click="searchCom()">
-                <span>Enviar</span>
-                <span class="pos_icon">
-                  <font-awesome-icon icon="paper-plane"/>
-                </span>
-              </el-button>  
+              </el-date-picker>  
             </div>
-          </div>
+          </el-form-item>
+          <el-form-item id="sform">
+            <el-button type="info" size="mini" plain @click="searchCom()">
+              <span>Enviar</span>
+              <span class="pos_icon">
+                <font-awesome-icon icon="paper-plane"/>
+              </span>
+            </el-button>
+          </el-form-item>
+        </el-form>
         </div>
       </section>
       <el-main id="mainContent">
@@ -124,22 +139,27 @@
     data(){
       return{
         //page: "",
-        fecha: "",
+        fecha: null,
         vsSearch: false,
       }
     },
     //
     methods:{
-      ...mapActions(['getSlidesByDate']),
+      ...mapActions(['getSlidesByDate','getAreas']),
       searchCom(){
         let form = {
           locacion: localStorage.getItem('msal.location'),
           institucion: localStorage.getItem('msal.institution'),
+          area: this.area,
           fecha: this.fecha
         }
         this.getSlidesByDate(form)
         this.vsSearch = false
         this.fecha = ""
+      },
+      //
+      setArea(val){
+        this.$store.commit('setArea', val)
       },
       //
       logout(){
@@ -149,6 +169,8 @@
     //
     computed: {
       ...mapState([
+        'areas',
+        'area',
         'hf',
         'fullscreenLoading',
         'navIns',
@@ -163,16 +185,9 @@
         'vsFS'
       ])
     },
-    /*
     created(){
-      if(this.$msal.isAuthenticated()){
-        //this.page = "App"
-      }
-      else{
-        //this.page = "Login"
-      }
+      this.getAreas(true)
     }
-    */
   }
 </script>
 <style lang="css">  
